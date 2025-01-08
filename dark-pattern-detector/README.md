@@ -1,5 +1,7 @@
 # Dark Pattern Detector
 
+> Do You Ever Feel Like You're Being Sold To Without Even Knowing It? 
+
 A Tampermonkey userscript that helps identify and highlight potential dark patterns on websites. [Dark patterns](https://en.wikipedia.org/wiki/Dark_pattern) are user interface design choices that manipulate or trick users into doing things they might not want to do.
 
 ## Features
