@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Pattern Detector Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .timer {
+            color: red;
+            font-weight: bold;
+        }
+        .price {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .banner {
+            background: #f8f8f8;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .notification {
+            background: #fff3cd;
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Shop</h1>
+
+    <!-- Urgency Patterns -->
+    <div class="banner">
+        <span class="timer">⏰ Flash Sale Ending Soon! Only 2 hours left!</span>
+    </div>
+
+    <!-- Scarcity Patterns -->
+    <div class="product-card">
+        <h2>Premium Headphones</h2>
+        <p class="price">$99.99</p>
+        <p class="notification">🔥 In high demand - only 3 left in stock!</p>
+        <p>12 people are viewing this right now</p>
+        <button class="button">Add to Cart</button>
+    </div>
+
+    <!-- Social Pressure -->
+    <div class="product-card">
+        <h2>Smart Watch</h2>
+        <p class="price">$199.99</p>
+        <p class="notification">👥 20 others bought this in the last hour</p>
+        <p>Trending in your area</p>
+        <button class="button">Add to Cart</button>
+    </div>
+
+    <!-- Misdirection -->
+    <div class="product-card">
+        <h2>Premium Subscription</h2>
+        <p>Choose your plan:</p>
+        <div>
+            <input type="radio" id="premium" name="plan" checked>
+            <label for="premium">✨ Best Value - Premium Plan ($49.99/month)</label>
+        </div>
+        <div>
+            <input type="radio" id="basic" name="plan">
+            <label for="basic">Basic Plan ($29.99/month)</label>
+        </div>
+        <p><small>Handpicked special offer just for you!</small></p>
+    </div>
+
+    <!-- FOMO -->
+    <div class="product-card">
+        <h2>Exclusive VIP Membership</h2>
+        <p>Join 5,000+ others in our exclusive community!</p>
+        <p class="notification">🎉 Limited membership spots available</p>
+        <p><small>Don't be left out - VIP spots filling up fast!</small></p>
+        <button class="button">Join Waitlist</button>
+    </div>
+
+    <!-- Dynamic Content -->
+    <div class="popup" id="dynamic-popup">
+        <p>🛒 Item still in your cart!</p>
+        <p><small>Hurry! Your cart will expire soon.</small></p>
+        <button class="button">Checkout Now</button>
+    </div>
+
+    <script>
+        // Add some dynamic content after 3 seconds
+        setTimeout(() => {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = '👀 15 people from your area are looking at this page right now!';
+            document.body.insertBefore(notification, document.body.firstChild);
+        }, 3000);
+    </script>
+</body>
+</html>
