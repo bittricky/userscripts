@@ -56,24 +56,5 @@ To develop or modify these scripts locally:
    - Use browser developer tools (F12) for debugging
    - Reload the target webpage to test changes
 
-
-## Contributing
-
-1. Fork the repository
-2. Create a new branch for your feature
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-If you encounter any issues or have suggestions:
-1. Open an issue in the GitHub repository
-2. Provide detailed information about the problem
-3. Include steps to reproduce the issue
-
 ---
 @author Mitul Patel
