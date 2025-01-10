@@ -25,7 +25,7 @@ First, install the Tampermonkey extension for your browser:
 
 To install any of the userscripts from this collection:
 
-1. Click on the script's `.user.js` file in the respective directory
+1. Click on the script's `<script_name>.js` file in the respective directory
 2. Click the "Raw" button on GitHub
 3. Tampermonkey will automatically detect the userscript and prompt you to install it
 4. Click "Install" in the Tampermonkey prompt
@@ -48,32 +48,13 @@ To develop or modify these scripts locally:
 
 3. Load the script in Tampermonkey:
    - Create a new script in Tampermonkey
-   - Copy the content of the local `.user.js` file
+   - Copy the content of the local `<script_name>.js` file
    - Save the script
 
 4. For development:
    - Edit the scripts using your preferred code editor
    - Use browser developer tools (F12) for debugging
    - Reload the target webpage to test changes
-
-
-## Contributing
-
-1. Fork the repository
-2. Create a new branch for your feature
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-If you encounter any issues or have suggestions:
-1. Open an issue in the GitHub repository
-2. Provide detailed information about the problem
-3. Include steps to reproduce the issue
 
 ---
 @author Mitul Patel
