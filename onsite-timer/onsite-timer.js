@@ -12,10 +12,10 @@
   (function () {
     "use strict";
 
-    const STORAGE_KEY = {
+    const STORAGE_KEY = Object.freeze({
       TIME: "onsite_timer_seconds_",
       PAUSED: "onsite_timer_paused_",
-    };
+    });
 
     const getDomainKey = (key) => key + window.location.hostname;
 
