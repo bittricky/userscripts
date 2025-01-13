@@ -7,6 +7,7 @@
 // @match        *://*/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
+// @connect      *
 // ==/UserScript==
 
 (function () {
