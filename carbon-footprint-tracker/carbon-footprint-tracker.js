@@ -75,6 +75,7 @@
         }
         #carbon-tracker-label {
             padding-left: 5px;
+            color: #000000;
         }
         .carbon-icon {
             fill: #ff4757;
