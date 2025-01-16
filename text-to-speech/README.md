@@ -55,12 +55,6 @@ const preferredVoice = voices.find(voice =>
 2. Falls back to base language match
 3. Defaults to system voice if no match found
 
-
-## Keyboard Shortcuts
-
-- `Space`: Play/Pause when text is selected
-- `Escape`: Stop speech
-
 ## Browser Compatibility
 
 The Web Speech API is supported in:
