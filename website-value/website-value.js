@@ -38,15 +38,6 @@
   // Get current hostname
   const hostname = window.location.hostname;
 
-  // Function to format number as currency
-  function formatCurrency(number) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(number);
-  }
-
   GM_xmlhttpRequest({
     method: "GET",
     url: `https://www.worthofweb.com/website-value/${hostname}/`,
