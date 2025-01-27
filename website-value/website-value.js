@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Shows the estimated value of the current website in USD
-// @author       You
+// @author       Mitul Patel
 // @match        *://*/*
 // @grant        GM_xmlhttpRequest
 // @connect      www.worthofweb.com
