@@ -42,8 +42,6 @@
     method: "GET",
     url: `https://www.worthofweb.com/website-value/${hostname}/`,
     onload: function (response) {
-      const parser = new DOMParser();
-
       // Extract website value and daily earnings
       const websiteValue = response.responseText.match(/\$[\d,]+(?:\.\d{2})?/);
       const dailyEarnings = response.responseText.match(
