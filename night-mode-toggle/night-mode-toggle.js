@@ -54,27 +54,27 @@
 
   const nightModeStyles = `
         body, div, section, article, nav, header, footer {
-            background-color: #1a1a1a !important;
-            color: #e0e0e0 !important;
+            background-color: #000000 !important;
+            color: #ffffff !important;
         }
 
         a {
-            color: #80b3ff !important;
+            color: #ff3333 !important;
         }
 
         input, textarea, select {
-            background-color: #2d2d2d !important;
-            color: #e0e0e0 !important;
-            border-color: #404040 !important;
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+            border-color: #ff3333 !important;
         }
 
         img, video {
-            filter: brightness(0.8) !important;
+            filter: brightness(0.85) !important;
         }
 
         /* Preserve white backgrounds for specific elements */
         [class*="logo"], [id*="logo"], [class*="brand"], [id*="brand"] {
-            filter: brightness(0.9) !important;
+            filter: brightness(0.95) !important;
         }
     `;
 
