@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clipboard History
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      2.0
 // @description  clipboard history manager with searchable UI, timestamps, and keyboard shortcuts
 // @author       Mitul Patel
 // @match        *://*/*
