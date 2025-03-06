@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  clipboard history manager with searchable UI, timestamps, and keyboard shortcuts
-// @author       Mitul Patel (Improvements by Claude)
+// @author       Mitul Patel
 // @match        *://*/*
 // @grant        GM_setValue
 // @grant        GM_getValue
