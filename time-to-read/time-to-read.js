@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Time to Read
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Displays estimated reading time for articles and long-form content
 // @author       Mitul Patel
 // @match        *://*/*
@@ -10,10 +10,30 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  ("use strict");
 
   const WORDS_PER_MINUTE = 225;
   const MIN_WORD_COUNT = 100;
+
+  const excludedSites = [
+    "github.com",
+    "gitlab.com",
+    "stackoverflow.com",
+    "jira.com",
+    "atlassian.com",
+    "bitbucket.org",
+    "docs.github.com",
+    "gist.github.com",
+    "npm.com",
+    "npmjs.com",
+    "developer.mozilla.org",
+    "w3schools.com",
+    "codepen.io",
+    "replit.com",
+    "stackexchange.com",
+    "amazon.com",
+    "ebay.com",
+  ];
 
   const sitePatterns = [
     { domain: "medium.com", contentSelector: "article" },
@@ -50,7 +70,18 @@
   }
 
   function isExcludedPage() {
-    const excludedPatterns = [/\/search\//, /\/tag\//, /\/category\//];
+    const excludedPatterns = [
+      /\/search\//,
+      /\/tag\//,
+      /\/category\//,
+      /\/repository\//,
+      /\/pull\//,
+      /\/issues\//,
+      /\/commits\//,
+      /\/branches\//,
+      /\/settings\//,
+      /\/dashboard\//,
+    ];
 
     for (const pattern of excludedPatterns) {
       if (window.location.pathname.match(pattern)) return true;
