@@ -121,7 +121,7 @@
         #cc-exchange {
             display: flex;
             justify-content: center;
-            margin: 4px 0;
+           margin-bottom: 8px;
         }
         #cc-exchange-btn {
             background: none;
