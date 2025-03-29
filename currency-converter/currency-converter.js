@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Currency Converter Widget
+// @name         Currency Converter
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Adds a modern minimalist currency converter to any webpage

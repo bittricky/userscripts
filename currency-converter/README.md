@@ -1,0 +1,120 @@
+# Currency Converter
+
+A modern, minimalist currency converter userscript that can be added to any webpage when you find yourself having difficulty doing the conversion. This tool allows for quick currency conversions without leaving your current page.
+
+## Features
+
+- **Modern Minimalist Design**: Clean interface with green and gold color scheme inspired by U.S. currency
+- **Floating Toggle Button**: Easily show/hide the converter with a single click
+- **Multiple Currency Support**: Convert between 10 major world currencies
+- **Real-time Exchange Rates**: Uses the free ExchangeRate-API for up-to-date conversion rates
+- **Currency Swap**: Quickly swap between source and target currencies
+- **Keyboard Support**: Press Enter to convert after entering an amount
+- **CSP Compatible**: Works on all websites regardless of Content Security Policy
+
+## Installation
+
+### Prerequisites
+
+You need a userscript manager extension installed in your browser:
+
+- [Tampermonkey](https://www.tampermonkey.net/) (recommended, works on Chrome, Firefox, Safari, Edge)
+- [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) (Firefox)
+- [Violentmonkey](https://violentmonkey.github.io/) (Chrome, Firefox, Edge)
+
+### Installation Steps
+
+1. Ensure you have a userscript manager installed (see above)
+2. Open the [currency-converter.js](./currency-converter.js) file in this repository
+3. Copy the entire code
+4. Open your userscript manager dashboard:
+   - Tampermonkey: Click the extension icon → "Dashboard"
+   - Greasemonkey: Click the extension icon → "New User Script"
+   - Violentmonkey: Click the extension icon → "Open Dashboard"
+5. Create a new script:
+   - Tampermonkey: Click the "+" tab
+   - Greasemonkey: It should already be in edit mode for a new script
+   - Violentmonkey: Click the "+" button → "New script"
+6. Delete any template code and paste the copied code
+7. Save the script:
+   - Tampermonkey: Press Ctrl+S or click File → Save
+   - Greasemonkey: Click "Save" button
+   - Violentmonkey: Click "Save" button
+
+## Usage
+
+1. After installation, visit any website
+2. Look for a green circular button in the bottom right corner of the page
+3. Click this button to open the currency converter
+4. Enter the amount you want to convert
+5. Select the source currency (default: USD)
+6. Select the target currency (default: EUR)
+7. Click "Convert" or press Enter
+8. View the conversion result
+9. To swap currencies, click the exchange icon between the dropdown menus
+10. To hide the converter, click the minimize button, close button, or the toggle button again
+
+## Technical Details
+
+### API Information
+
+This userscript uses the free tier of ExchangeRate-API:
+- Endpoint: `https://open.er-api.com/v6/latest/[CURRENCY_CODE]`
+- Documentation: [ExchangeRate-API Docs](https://www.exchangerate-api.com/docs/free)
+- No API key required
+- Rate limits apply (see API documentation for details)
+
+### Permissions
+
+The userscript requires the following permissions:
+
+- `GM_addStyle`: To add custom CSS styles to the page
+- `GM_xmlhttpRequest`: To make cross-origin requests to the currency API
+- `@connect open.er-api.com`: To allow connections to the API domain
+
+### Browser Compatibility
+
+Tested and working on:
+- Google Chrome (latest)
+- Mozilla Firefox (latest)
+- Microsoft Edge (latest)
+- Safari (with Tampermonkey)
+
+### Local Development
+
+To modify and test the userscript locally:
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/yourusername/userscripts.git
+   cd userscripts/currency-converter
+   ```
+
+2. Open the `currency-converter.js` file in your preferred code editor
+
+3. Make your desired changes
+
+4. To test your changes:
+   - Option 1: Copy the updated code to your userscript manager as described in the installation steps
+   - Option 2: Use the local file option in your userscript manager (if supported):
+     - Tampermonkey: Click the "+" tab → "Utilities" tab → "File" (under Import from disk)
+     - Navigate to your local `currency-converter.js` file and select it
+
+5. Refresh any webpage to see your changes
+
+## Customization
+
+You can customize various aspects of the converter by modifying the following variables in the code:
+
+- **Color Scheme**: Modify the CSS variables in the `style` constant
+- **Position**: Adjust the `bottom` and `right` properties in the CSS for `#cc-toggle-btn` and `#currency-converter`
+- **Currencies**: Add or remove currency options in the HTML template within the `widget.innerHTML` assignment
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- [ExchangeRate-API](https://www.exchangerate-api.com/) for providing free currency conversion data
+- [Font Awesome](https://fontawesome.com/) for the SVG icons used in the interface
