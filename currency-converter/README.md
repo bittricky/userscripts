@@ -80,13 +80,17 @@ Tested and working on:
 - Microsoft Edge (latest)
 - Safari (with Tampermonkey)
 
+### What is CSP (Content Security Policy)?
+
+Content Security Policy (CSP) is a security feature implemented by browsers that restricts which external resources a webpage can load. It helps prevent cross-site scripting (XSS) attacks and other code injection vulnerabilities by controlling which domains a page can communicate with.
+
 ### Local Development
 
 To modify and test the userscript locally:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/userscripts.git
+   git clone https://github.com/bittricky/userscripts.git
    cd userscripts/currency-converter
    ```
 
