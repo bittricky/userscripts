@@ -63,6 +63,7 @@
             opacity: 1;
             transform: translateY(0);
             border: 1px solid #e6c200;
+            color: #333;
         }
         #currency-converter.hidden {
             opacity: 0;
@@ -111,6 +112,9 @@
             font-size: 14px;
             transition: border-color 0.2s;
             outline: none;
+            background-color: white;
+            box-sizing: border-box;
+            height: 40px;
         }
         #currency-converter input:focus {
             border-color: #006400;
@@ -118,6 +122,13 @@
         .cc-input-container {
             position: relative;
             margin-bottom: 12px;
+        }
+        #currency-converter label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
         }
         .cc-error {
             color: #d32f2f;
@@ -198,16 +209,19 @@
                 <div id="cc-close" class="cc-icon-btn">${svgIcons.close}</div>
             </div>
         </div>
-        <input type="number" id="amount" placeholder="Amount" />
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" min="0" step="any" />
+        <label for="from">From Currency</label>
         <div class="cc-input-container">
-            <input type="text" id="from" placeholder="From Currency (e.g. USD)" maxlength="3" />
+            <input type="text" id="from" placeholder="e.g. USD" maxlength="3" />
             <div id="from-error" class="cc-error"></div>
         </div>
         <div id="cc-exchange">
             <button id="cc-exchange-btn" title="Swap currencies">${svgIcons.exchange}</button>
         </div>
+        <label for="to">To Currency</label>
         <div class="cc-input-container">
-            <input type="text" id="to" placeholder="To Currency (e.g. EUR)" maxlength="3" />
+            <input type="text" id="to" placeholder="e.g. EUR" maxlength="3" />
             <div id="to-error" class="cc-error"></div>
         </div>
         <button id="convert">Convert</button>
