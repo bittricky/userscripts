@@ -209,6 +209,7 @@
                 <div id="cc-close" class="cc-icon-btn">${svgIcons.close}</div>
             </div>
         </div>
+        <p id="cc-support-text">Supports currencies in both fiat and crypto</p
         <label for="amount">Amount</label>
         <input type="number" id="amount" min="0" step="any" />
         <label for="from">From Currency</label>
