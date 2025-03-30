@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Currency Converter
 // @namespace    http://tampermonkey.net/
-// @version      1.1
-// @description  Adds a modern minimalist currency converter to any webpage
+// @version      1.2
+// @description  Adds a modern minimalist currency converter to any webpage with cryptocurrency support
 // @author       Mitul Patel
 // @match        *://*/*
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
 // @connect      open.er-api.com
+// @connect      api.coingecko.com
 // ==/UserScript==
 
 (function () {
@@ -239,6 +240,31 @@
     }
   });
 
+  const commonCryptos = Object.freeze({
+    BTC: "Bitcoin",
+    ETH: "Ethereum",
+    USDT: "Tether",
+    BNB: "Binance Coin",
+    XRP: "Ripple",
+    ADA: "Cardano",
+    SOL: "Solana",
+    DOT: "Polkadot",
+    DOGE: "Dogecoin",
+    SHIB: "Shiba Inu",
+    MATIC: "Polygon",
+    LTC: "Litecoin",
+  });
+
+  // Check if a currency code is likely a cryptocurrency
+  function isCrypto(code) {
+    // Common crypto codes or check against our list
+    if (commonCryptos[code]) return true;
+
+    // Most crypto codes are 3-5 characters, but there are exceptions
+    // This is a simple heuristic - not foolproof
+    return code.length >= 3 && code.length <= 5 && !/^[A-Z]{3}$/.test(code);
+  }
+
   function validateCurrency(currencyCode, elementId) {
     if (!currencyCode) {
       document.getElementById(`${elementId}-error`).textContent =
@@ -249,9 +275,10 @@
     currencyCode = currencyCode.toUpperCase();
     document.getElementById(elementId).value = currencyCode;
 
-    if (!/^[A-Z]{3}$/.test(currencyCode)) {
+    // Allow 3-5 letter codes to accommodate cryptocurrencies
+    if (!/^[A-Z]{3,5}$/.test(currencyCode)) {
       document.getElementById(`${elementId}-error`).textContent =
-        "Currency code must be 3 letters";
+        "Currency code must be 3-5 letters";
       return false;
     }
 
@@ -265,6 +292,216 @@
   document.getElementById("to").addEventListener("input", () => {
     document.getElementById("to-error").textContent = "";
   });
+
+  // Fiat currency conversion
+  function convertWithExchangeRateAPI(amount, from, to, resultEl) {
+    GM_xmlhttpRequest({
+      method: "GET",
+      url: `https://open.er-api.com/v6/latest/${from}`,
+      responseType: "json",
+      onload: function (response) {
+        const data = response.response;
+
+        if (!data || data.result !== "success") {
+          if (data && data.error && data.error.includes("not supported")) {
+            // If fiat currency not supported, check if it's a crypto
+            if (isCrypto(from)) {
+              convertWithCoinGecko(amount, from, to, resultEl);
+              return;
+            }
+            document.getElementById(
+              "from-error"
+            ).textContent = `Currency '${from}' is not supported`;
+            resultEl.textContent = "Error: Invalid currency code.";
+          } else {
+            resultEl.textContent = "Error: Could not convert currencies.";
+          }
+          return;
+        }
+
+        const rate = data.rates[to];
+
+        if (!rate) {
+          if (isCrypto(to)) {
+            const usdRate = data.rates["USD"];
+
+            if (usdRate) {
+              const amountInUsd = amount * usdRate;
+              convertCryptoWithUSD(
+                amountInUsd,
+                "USD",
+                to,
+                resultEl,
+                from,
+                amount
+              );
+              return;
+            }
+          }
+
+          document.getElementById(
+            "to-error"
+          ).textContent = `Currency '${to}' is not supported`;
+          resultEl.textContent = `Error: Rate for ${to} not available.`;
+          return;
+        }
+
+        const convertedAmount = amount * rate;
+
+        resultEl.textContent = `${amount.toLocaleString()} ${from} = ${convertedAmount.toLocaleString(
+          undefined,
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 6,
+          }
+        )} ${to}`;
+      },
+      onerror: function (error) {
+        resultEl.textContent = "Error fetching conversion rate.";
+        console.error("Currency conversion error:", error);
+      },
+    });
+  }
+
+  // Function to convert using CoinGecko API (cryptocurrencies)
+  function convertWithCoinGecko(amount, from, to, resultEl) {
+    const fromId = getCoinGeckoId(from.toLowerCase());
+    const isToFiat = !isCrypto(to);
+    const vsCurrency = isToFiat ? to.toLowerCase() : "usd";
+
+    GM_xmlhttpRequest({
+      method: "GET",
+      url: `https://api.coingecko.com/api/v3/simple/price?ids=${fromId}&vs_currencies=${vsCurrency}`,
+      responseType: "json",
+      onload: function (response) {
+        const data = response.response;
+
+        if (!data || !data[fromId] || !data[fromId][vsCurrency]) {
+          document.getElementById(
+            "from-error"
+          ).textContent = `Cryptocurrency '${from}' not found or not supported`;
+          resultEl.textContent = "Error: Could not convert cryptocurrency.";
+          return;
+        }
+
+        const rateToVsCurrency = data[fromId][vsCurrency];
+
+        if (isToFiat) {
+          const convertedAmount = amount * rateToVsCurrency;
+          resultEl.textContent = `${amount.toLocaleString()} ${from} = ${convertedAmount.toLocaleString(
+            undefined,
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 6,
+            }
+          )} ${to}`;
+        } else {
+          const toId = getCoinGeckoId(to.toLowerCase());
+
+          GM_xmlhttpRequest({
+            method: "GET",
+            url: `https://api.coingecko.com/api/v3/simple/price?ids=${toId}&vs_currencies=usd`,
+            responseType: "json",
+            onload: function (response2) {
+              const data2 = response2.response;
+
+              if (!data2 || !data2[toId] || !data2[toId]["usd"]) {
+                document.getElementById(
+                  "to-error"
+                ).textContent = `Cryptocurrency '${to}' not found or not supported`;
+                resultEl.textContent =
+                  "Error: Could not convert to target cryptocurrency.";
+                return;
+              }
+
+              const rateToUsd = data2[toId]["usd"];
+              const amountInUsd = amount * rateToVsCurrency;
+              const convertedAmount = amountInUsd / rateToUsd;
+
+              resultEl.textContent = `${amount.toLocaleString()} ${from} = ${convertedAmount.toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 8,
+                }
+              )} ${to}`;
+            },
+            onerror: function (error) {
+              resultEl.textContent = "Error fetching cryptocurrency rates.";
+              console.error("Crypto conversion error:", error);
+            },
+          });
+        }
+      },
+      onerror: function (error) {
+        resultEl.textContent = "Error fetching cryptocurrency rates.";
+        console.error("Crypto conversion error:", error);
+      },
+    });
+  }
+
+  // Convert from fiat (in USD) to crypto
+  function convertCryptoWithUSD(
+    amountInUsd,
+    from,
+    to,
+    resultEl,
+    originalCurrency,
+    originalAmount
+  ) {
+    const toId = getCoinGeckoId(to.toLowerCase());
+
+    GM_xmlhttpRequest({
+      method: "GET",
+      url: `https://api.coingecko.com/api/v3/simple/price?ids=${toId}&vs_currencies=usd`,
+      responseType: "json",
+      onload: function (response) {
+        const data = response.response;
+
+        if (!data || !data[toId] || !data[toId]["usd"]) {
+          document.getElementById(
+            "to-error"
+          ).textContent = `Cryptocurrency '${to}' not found or not supported`;
+          resultEl.textContent = "Error: Could not convert to cryptocurrency.";
+          return;
+        }
+
+        const rateToUsd = data[toId]["usd"];
+        const convertedAmount = amountInUsd / rateToUsd;
+
+        resultEl.textContent = `${originalAmount.toLocaleString()} ${originalCurrency} = ${convertedAmount.toLocaleString(
+          undefined,
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 8,
+          }
+        )} ${to}`;
+      },
+      onerror: function (error) {
+        resultEl.textContent = "Error fetching cryptocurrency rates.";
+        console.error("Crypto conversion error:", error);
+      },
+    });
+  }
+
+  function getCoinGeckoId(code) {
+    const coinMap = {
+      btc: "bitcoin",
+      eth: "ethereum",
+      usdt: "tether",
+      bnb: "binancecoin",
+      xrp: "ripple",
+      ada: "cardano",
+      sol: "solana",
+      dot: "polkadot",
+      doge: "dogecoin",
+      shib: "shiba-inu",
+      matic: "matic-network",
+      ltc: "litecoin",
+    };
+
+    return coinMap[code] || code;
+  }
 
   document.getElementById("convert").addEventListener("click", () => {
     const amount = parseFloat(document.getElementById("amount").value);
@@ -292,51 +529,13 @@
 
     resultEl.textContent = "Converting...";
 
-    // Using GM_xmlhttpRequest to bypass CSP restrictions
-    GM_xmlhttpRequest({
-      method: "GET",
-      url: `https://open.er-api.com/v6/latest/${from}`,
-      responseType: "json",
-      onload: function (response) {
-        const data = response.response;
-
-        if (!data || data.result !== "success") {
-          if (data && data.error && data.error.includes("not supported")) {
-            document.getElementById(
-              "from-error"
-            ).textContent = `Currency '${from}' is not supported by the API`;
-            resultEl.textContent = "Error: Invalid currency code.";
-          } else {
-            resultEl.textContent = "Error: Could not convert currencies.";
-          }
-          return;
-        }
-
-        const rate = data.rates[to];
-
-        if (!rate) {
-          document.getElementById(
-            "to-error"
-          ).textContent = `Currency '${to}' is not supported by the API`;
-          resultEl.textContent = `Error: Rate for ${to} not available.`;
-          return;
-        }
-
-        const convertedAmount = amount * rate;
-
-        resultEl.textContent = `${amount.toLocaleString()} ${from} = ${convertedAmount.toLocaleString(
-          undefined,
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          }
-        )} ${to}`;
-      },
-      onerror: function (error) {
-        resultEl.textContent = "Error fetching conversion rate.";
-        console.error("Currency conversion error:", error);
-      },
-    });
+    if (isCrypto(from)) {
+      // If source is crypto, use CoinGecko API
+      convertWithCoinGecko(amount, from, to, resultEl);
+    } else {
+      // If source is fiat, start with ExchangeRate API
+      convertWithExchangeRateAPI(amount, from, to, resultEl);
+    }
   });
 
   document.getElementById("amount").addEventListener("keypress", (e) => {

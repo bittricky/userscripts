@@ -7,6 +7,7 @@ A modern, minimalist currency converter userscript that can be added to any webp
 - **Modern Minimalist Design**: Clean interface with green and gold color scheme inspired by U.S. currency
 - **Floating Toggle Button**: Easily show/hide the converter with a single click
 - **Universal Currency Support**: Convert between any currencies supported by the ExchangeRate-API
+- **Cryptocurrency Support**: Convert between cryptocurrencies and fiat currencies using CoinGecko API
 - **Real-time Exchange Rates**: Uses the free ExchangeRate-API for up-to-date conversion rates
 - **Currency Swap**: Quickly swap between source and target currencies
 - **Keyboard Support**: Press Enter to convert after entering an amount
@@ -47,8 +48,8 @@ You need a userscript manager extension installed in your browser:
 2. Look for a green circular button in the bottom right corner of the page
 3. Click this button to open the currency converter
 4. Enter the amount you want to convert
-5. Enter the source currency code (e.g., USD, EUR, GBP)
-6. Enter the target currency code (e.g., JPY, CNY, INR)
+5. Enter the source currency code (e.g., USD, EUR, GBP for fiat currencies or BTC, ETH, SOL for cryptocurrencies)
+6. Enter the target currency code (e.g., JPY, CNY, INR for fiat currencies or BTC, ETH, SOL for cryptocurrencies)
 7. Click "Convert" or press Enter
 8. View the conversion result
 9. To swap currencies, click the exchange icon between the input fields
@@ -58,13 +59,23 @@ You need a userscript manager extension installed in your browser:
 
 ### API Information
 
-This userscript uses the free tier of ExchangeRate-API:
+This userscript uses two free APIs for currency conversion:
+
+#### ExchangeRate-API (Fiat Currencies)
 - Endpoint: `https://open.er-api.com/v6/latest/[CURRENCY_CODE]`
 - Documentation: [ExchangeRate-API Docs](https://www.exchangerate-api.com/docs/free)
 - No API key required
 - Rate limits apply (see API documentation for details)
-- Supports a wide range of currency codes (see API documentation for the full list)
-- Validates currency codes and provides error messages for unsupported currencies
+- Supports a wide range of fiat currency codes
+
+#### CoinGecko API (Cryptocurrencies)
+- Endpoint: `https://api.coingecko.com/api/v3/simple/price?ids=[CRYPTO_ID]&vs_currencies=[CURRENCY]`
+- Documentation: [CoinGecko API Docs](https://www.coingecko.com/api/documentation)
+- No API key required for basic usage
+- Rate limits: 10-50 calls/minute (see API documentation for details)
+- Supports 10,000+ cryptocurrencies
+
+The userscript automatically selects the appropriate API based on the currency codes entered.
 
 ### Permissions
 
@@ -118,5 +129,6 @@ You can customize various aspects of the converter by modifying the following va
 
 ## Acknowledgements
 
-- [ExchangeRate-API](https://www.exchangerate-api.com/) for providing free currency conversion data
+- [ExchangeRate-API](https://www.exchangerate-api.com/) for providing free fiat currency conversion data
+- [CoinGecko](https://www.coingecko.com/) for providing free cryptocurrency data
 - [Font Awesome](https://fontawesome.com/) for the SVG icons used in the interface
