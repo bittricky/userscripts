@@ -6,7 +6,7 @@ A modern, minimalist currency converter userscript that can be added to any webp
 
 - **Modern Minimalist Design**: Clean interface with green and gold color scheme inspired by U.S. currency
 - **Floating Toggle Button**: Easily show/hide the converter with a single click
-- **Multiple Currency Support**: Convert between 10 major world currencies
+- **Universal Currency Support**: Convert between any currencies supported by the ExchangeRate-API
 - **Real-time Exchange Rates**: Uses the free ExchangeRate-API for up-to-date conversion rates
 - **Currency Swap**: Quickly swap between source and target currencies
 - **Keyboard Support**: Press Enter to convert after entering an amount
@@ -47,12 +47,12 @@ You need a userscript manager extension installed in your browser:
 2. Look for a green circular button in the bottom right corner of the page
 3. Click this button to open the currency converter
 4. Enter the amount you want to convert
-5. Select the source currency (default: USD)
-6. Select the target currency (default: EUR)
+5. Enter the source currency code (e.g., USD, EUR, GBP)
+6. Enter the target currency code (e.g., JPY, CNY, INR)
 7. Click "Convert" or press Enter
 8. View the conversion result
-9. To swap currencies, click the exchange icon between the dropdown menus
-10. To hide the converter, click the minimize button, close button, or the toggle button again
+9. To swap currencies, click the exchange icon between the input fields
+10. To hide the converter, click the close button or the toggle button again
 
 ## Technical Details
 
@@ -63,6 +63,8 @@ This userscript uses the free tier of ExchangeRate-API:
 - Documentation: [ExchangeRate-API Docs](https://www.exchangerate-api.com/docs/free)
 - No API key required
 - Rate limits apply (see API documentation for details)
+- Supports a wide range of currency codes (see API documentation for the full list)
+- Validates currency codes and provides error messages for unsupported currencies
 
 ### Permissions
 
@@ -113,10 +115,6 @@ You can customize various aspects of the converter by modifying the following va
 - **Color Scheme**: Modify the CSS variables in the `style` constant
 - **Position**: Adjust the `bottom` and `right` properties in the CSS for `#cc-toggle-btn` and `#currency-converter`
 - **Currencies**: Add or remove currency options in the HTML template within the `widget.innerHTML` assignment
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
 
