@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Currency Converter
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Adds a modern minimalist currency converter to any webpage with cryptocurrency support
 // @author       Mitul Patel
 // @match        *://*/*
