@@ -1,5 +1,7 @@
 # Userscripts Collection
 
+> Feel like monkeying around with the browser?
+
 A collection of useful browser userscripts that enhance web browsing experience. These scripts are designed to work with popular userscript managers like Tampermonkey, Greasemonkey, and Violentmonkey.
 
 ## <center> <big> <b> 🙈 🙉 🙊 </b> </big> </center>
