@@ -4,7 +4,7 @@
 
 A collection of useful browser userscripts that enhance web browsing experience. These scripts are designed to work with popular userscript managers like Tampermonkey, Greasemonkey, and Violentmonkey.
 
-## <center> <big> <b> 🙈 🙉 🙊 </b> </big> </center>
+## [<center> <big> <b> 🙈 🙉 🙊 </b> </big> </center>](https://en.wikipedia.org/wiki/Three_wise_monkeys)
 
 ## What is the difference between a Userscript and a Browser Extension?
 
