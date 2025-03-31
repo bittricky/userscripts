@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D 5e Currency Converter
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Adds a D&D 5e currency converter to any webpage for easy conversion between platinum, gold, electrum, silver, and copper
 // @author       Mitul Patel
 // @match        *://*/*
@@ -31,6 +31,23 @@
   };
 
   const style = `
+    #dnd-formula {
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 5px;
+      color: #4B0082;
+      font-style: italic;
+    }
+    #dnd-rates {
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 12px;
+      color: #555;
+      background: #FFFACD;
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px dashed #FFD700;
+    }
     #dnd-toggle-btn {
       position: fixed;
       bottom: 30px;
@@ -230,6 +247,8 @@
         <div id="dnd-close" class="dnd-icon-btn">${svgIcons.close}</div>
       </div>
     </div>
+    <div id="dnd-formula">Formula: Amount × From Value / To Value</div>
+    <div id="dnd-rates">1 pp = 10 gp = 20 ep = 100 sp = 1000 cp</div>
     <label for="amount">Amount</label>
     <input type="number" id="amount" min="0" step="any" />
     <label for="from-currency">From Currency</label>
