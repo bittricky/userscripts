@@ -277,24 +277,25 @@
       <span style="vertical-align:middle;margin-left:6px;font-weight:600;letter-spacing:0.2px;">Affiliate</span>
     `;
     btn.style.cssText = `
-      position: fixed;
-      bottom: 60px;
-      right: 20px;
-      z-index: 10000;
-      background: #fff;
-      color: #333;
-      border: 1px solid #bbb;
-      border-radius: 20px;
-      padding: 8px 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      font-size: 14px;
-      cursor: pointer;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-family: inherit;
+      position: fixed !important;
+      bottom: 60px !important;
+      right: 20px !important;
+      z-index: 10000 !important;
+      background: #fff !important;
+      color: #222 !important;
+      border: 1px solid #bbb !important;
+      border-radius: 20px !important;
+      padding: 8px 16px !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+      font-size: 15px !important;
+      cursor: pointer !important;
+      opacity: 0.85 !important;
+      transition: opacity 0.2s !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 7px !important;
+      font-family: 'Segoe UI', Arial, sans-serif !important;
+      outline: none !important;
     `;
     btn.addEventListener("mouseenter", () => (btn.style.opacity = "1"));
     btn.addEventListener("mouseleave", () => (btn.style.opacity = "0.8"));
@@ -302,26 +303,127 @@
     // Modal overlay
     const overlay = document.createElement("div");
     overlay.style.cssText = `
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.25);
-      z-index: 10001;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      position: fixed !important;
+      top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+      background: rgba(0,0,0,0.25) !important;
+      z-index: 10001 !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Segoe UI', Arial, sans-serif !important;
     `;
 
     // Modal window (declare only once)
     const modal = document.createElement("div");
     modal.style.cssText = `
-      background: #fff;
-      border-radius: 8px;
-      padding: 24px 20px 16px 20px;
-      min-width: 320px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.16);
-      position: relative;
-      font-family: inherit;
+      background: #fff !important;
+      border-radius: 12px !important;
+      padding: 24px 20px 16px 20px !important;
+      min-width: 340px !important;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.18) !important;
+      position: relative !important;
+      font-family: 'Segoe UI', Arial, sans-serif !important;
+      color: #222 !important;
+      border: 1.5px solid #e5e5e5 !important;
+      max-width: 98vw !important;
+      box-sizing: border-box !important;
     `;
+    // Add a CSS reset and UI-specific styles for modal children
+    const style = document.createElement('style');
+    style.textContent = `
+      .affiliate-modal * {
+        box-sizing: border-box !important;
+        font-family: 'Segoe UI', Arial, sans-serif !important;
+        color: #222 !important;
+      }
+      .affiliate-modal h3 {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        margin: 0 0 18px 0 !important;
+        color: #232323 !important;
+        letter-spacing: 0.01em;
+      }
+      .affiliate-modal table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin-bottom: 12px !important;
+      }
+      .affiliate-modal td {
+        padding: 10px 6px !important;
+        border-bottom: 1px solid #f1f1f1 !important;
+        text-align: left !important;
+        font-size: 15px !important;
+      }
+      .affiliate-modal tr:last-child td {
+        border-bottom: none !important;
+      }
+      .affiliate-modal button[title="Delete"] {
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+        width: 32px !important;
+        height: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: background 0.15s !important;
+        border-radius: 6px !important;
+      }
+      .affiliate-modal button[title="Delete"]:hover {
+        background: #ffeaea !important;
+      }
+      .affiliate-modal input[type="text"] {
+        background: #fff !important;
+        border: 1px solid #bbb !important;
+        border-radius: 7px !important;
+        padding: 7px 10px !important;
+        font-size: 15px !important;
+        color: #232323 !important;
+        margin-right: 8px !important;
+        outline: none !important;
+        box-shadow: none !important;
+        margin-bottom: 0 !important;
+      }
+      .affiliate-modal input[type="text"]:focus {
+        border-color: #3a6fd8 !important;
+      }
+      .affiliate-modal button[type="submit"] {
+        background: #1b2958 !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+        border: none !important;
+        border-radius: 9px !important;
+        padding: 8px 18px !important;
+        font-size: 15px !important;
+        box-shadow: 0 2px 6px rgba(27,41,88,0.10) !important;
+        cursor: pointer !important;
+        margin-left: 7px !important;
+        transition: background 0.18s !important;
+      }
+      .affiliate-modal button[type="submit"]:hover {
+        background: #16306a !important;
+      }
+      .affiliate-modal form {
+        display: flex !important;
+        align-items: center !important;
+        gap: 7px !important;
+        margin-top: 10px !important;
+        margin-bottom: 4px !important;
+      }
+      .affiliate-modal {
+        /* width intentionally unset to allow content-based sizing; min-width/max-width handled inline */
+      }
+      .affiliate-modal small {
+        color: #888 !important;
+        font-size: 13px !important;
+        margin-top: 7px !important;
+        display: block !important;
+      }
+    `;
+    modal.classList.add('affiliate-modal');
+    modal.appendChild(style);
+
 
     // Close button with SVG
     const closeBtn = document.createElement("button");
