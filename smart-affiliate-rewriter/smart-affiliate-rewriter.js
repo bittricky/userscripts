@@ -329,7 +329,7 @@
       box-sizing: border-box !important;
     `;
     // Add a CSS reset and UI-specific styles for modal children
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       .affiliate-modal * {
         box-sizing: border-box !important;
@@ -411,9 +411,7 @@
         margin-top: 10px !important;
         margin-bottom: 4px !important;
       }
-      .affiliate-modal {
-        /* width intentionally unset to allow content-based sizing; min-width/max-width handled inline */
-      }
+        
       .affiliate-modal small {
         color: #888 !important;
         font-size: 13px !important;
@@ -421,9 +419,8 @@
         display: block !important;
       }
     `;
-    modal.classList.add('affiliate-modal');
+    modal.classList.add("affiliate-modal");
     modal.appendChild(style);
-
 
     // Close button with SVG
     const closeBtn = document.createElement("button");
