@@ -6,12 +6,11 @@ A userscript that displays positive affirmations in a clean, modern floating ele
 
 ## Features
 
-- 🎯 Displays motivational affirmations in a floating element
-- 🔄 Automatically refreshes every 30 seconds
-- 🎨 Clean, modern UI with smooth hover effects
-- ❌ Easy-to-use close button
-- 📱 Responsive design with min/max width constraints
-- 🌐 Works on any website
+- Displays motivational affirmations in a floating element
+- Automatically refreshes every 30 seconds
+- Clean, modern UI with smooth hover effects
+- Easy-to-use close button
+- Works on any website
 
 ## Installation
 
