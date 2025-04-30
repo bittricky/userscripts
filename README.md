@@ -94,4 +94,4 @@ To develop or modify these scripts locally:
    - Reload the target webpage to test changes
 
 ---
-@author Mitul Patel
+@author Mitul Patel | [GitHub](https://github.com/bittricky) | [Website](https://mitulpa.tel)
