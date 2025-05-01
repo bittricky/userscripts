@@ -97,6 +97,10 @@
     messageBox.appendChild(contentWrapper);
 
     document.body.appendChild(messageBox);
+
+    setTimeout(() => {
+      messageBox.remove();
+    }, 5000);
   }
 
   checkIfArchived();
