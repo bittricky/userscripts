@@ -1,15 +1,62 @@
 // ==UserScript==
 // @name         Subscription Article Archive Check
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Checks if an article behind a subscription is available on Archive.is
 // @author       Mitul Patel
-// @match        *://*/*
+// @match        *://*.nytimes.com/*
+// @match        *://*.wsj.com/*
+// @match        *://*.washingtonpost.com/*
+// @match        *://*.economist.com/*
+// @match        *://*.ft.com/*
+// @match        *://*.bloomberg.com/*
+// @match        *://*.newyorker.com/*
+// @match        *://*.wired.com/*
+// @match        *://*.theatlantic.com/*
+// @match        *://*.thetimes.co.uk/*
+// @match        *://*.theguardian.com/*
+// @match        *://*.reuters.com/*
+// @match        *://*.forbes.com/*
+// @match        *://*.businessinsider.com/*
+// @match        *://*.medium.com/*
+// @match        *://*.latimes.com/*
+// @match        *://*.sfchronicle.com/*
+// @match        *://*.barrons.com/*
+// @match        *://*.foreignpolicy.com/*
+// @match        *://*.foreignaffairs.com/*
 // @grant        none
 // ==/UserScript==
 
 (function () {
   "use strict";
+
+  const subscriptionDomains = [
+    "nytimes.com",
+    "wsj.com",
+    "washingtonpost.com",
+    "economist.com",
+    "ft.com",
+    "bloomberg.com",
+    "newyorker.com",
+    "wired.com",
+    "theatlantic.com",
+    "thetimes.co.uk",
+    "theguardian.com",
+    "reuters.com",
+    "forbes.com",
+    "businessinsider.com",
+    "medium.com",
+    "latimes.com",
+    "sfchronicle.com",
+    "barrons.com",
+    "foreignpolicy.com",
+    "foreignaffairs.com",
+  ];
+
+  function isSubscriptionSite() {
+    const currentDomain = window.location.hostname;
+    return subscriptionDomains.some((domain) => currentDomain.includes(domain));
+  }
 
   function checkIfArchived() {
     let currentUrl = window.location.href;
@@ -103,5 +150,7 @@
     }, 5000);
   }
 
-  checkIfArchived();
+  if (isSubscriptionSite()) {
+    checkIfArchived();
+  }
 })();
