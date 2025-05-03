@@ -39,6 +39,51 @@ Userscript managers are browser extensions that allow you to:
 
 Popular userscript managers include Tampermonkey, Greasemonkey (Firefox's original), and Violentmonkey (open-source alternative).
 
+## How a Userscript Works in Practice
+
+A userscript runs on a webpage as if it were part of the page's code. When a page loads, the userscript manager checks the page's URL against the script's `@match`/`@include` patterns. If there's a match, the script is injected into the page, and the JavaScript code runs just like any other code on the page. This allows userscripts to modify the page, add or remove features, automate tasks, or enhance privacy and security.
+
+
+### Key Components and Flow:
+
+#### 1. Userscript Structure
+- **Metadata block**  
+  Defines directives such as `@name`, `@match`, `@include`, `@grant`, `@run-at`, etc. These directives control when, where, and how the script runs.
+- **JavaScript code block**  
+  Contains the actual logic that runs on matched pages, including functions, event listeners, and DOM manipulations.
+
+#### 2. Installation and Activation
+1. Install the userscript in a manager extension (e.g. Tampermonkey, Greasemonkey).  
+2. When you visit a page, the extension checks its URL against each script's `@match`/`@include` patterns.  
+3. If there's a match, it injects the script into the page context, essentially merging your code with the page's JavaScript environment.
+4. The userscript manager handles permissions and isolation between scripts.
+
+#### 3. Execution Timing
+Controlled by the `@run-at` directive (or defaults):
+- `document-start` — Executes as soon as the document object is available, before any DOM is constructed or resources are loaded. Ideal for intercepting API calls or preventing elements from appearing.
+- `document-idle` — Executes after the DOM has fully parsed but potentially before all resources have loaded (default). Best for most DOM manipulations.
+- `document-end` — Executes after all resources, including images and scripts, have loaded. Good for operations that need the complete page.
+
+#### 4. Script Functionality
+Once injected, a userscript can:
+- Modify page appearance (CSS tweaks, reposition elements, add custom styles).
+- Add or remove UI features (buttons, panels, tooltips, notifications).
+- Automate repetitive tasks (click buttons, fill forms, navigate pages).
+- Enhance privacy/security (block trackers, mask data, filter content).
+- Interact with external resources (fetch data from APIs, integrate services).
+
+#### 5. Data Persistence
+Userscripts can persist settings or data using:
+- **Storage APIs**: `GM_setValue` / `GM_getValue` in Greasemonkey/Tampermonkey for key-value storage.
+- **Browser storage**: `localStorage` or `sessionStorage` for site-specific data (requires appropriate permissions).
+- **External storage**: Using APIs to store data on external services (requires network permissions).
+
+#### 6. Debugging and Maintenance
+- Use browser developer tools (F12) to debug userscripts.
+- Console logs from userscripts appear in the browser's console.
+- Some userscript managers provide their own debugging tools and logs.
+- Scripts may need updates when websites change their structure or functionality.
+
 ## Installation
 
 ### 1. Install a Userscript Manager
@@ -66,6 +111,7 @@ To install any of the userscripts from this collection:
 2. Click the "Raw" button on GitHub
 3. Your userscript manager will automatically detect the userscript and prompt you to install it
 4. Click "Install" in the prompt
+
 
 ## Local Development
 
