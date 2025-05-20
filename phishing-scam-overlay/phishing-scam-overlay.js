@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Crypto Phishing & Scam Alert Overlay
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      1.0
 // @description  Warns you if you visit a known crypto-phishing or scam site using PhishTank API
-// @author       You
+// @author       Mitul Patel
 // @match        *://*/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_getValue
@@ -25,14 +25,66 @@
     apiKey: GM_getValue("phishtank_api_key", ""),
   };
 
+  // Check if we're on a configuration page or test page
   if (
     window.location.protocol === "https:" &&
     (window.location.hostname === "tampermonkey.net" ||
       window.location.hostname === "greasyfork.org")
   ) {
     addConfigUI();
-  } else {
+  } else if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    // For localhost testing, add test controls and still check URL
     checkCurrentUrl();
+    setTimeout(addTestControls, 1000);
+  } else {
+    // Normal operation for all other sites
+    checkCurrentUrl();
+  }
+  
+  // Add test controls for localhost testing
+  function addTestControls() {
+    if (document.readyState !== "complete" && document.readyState !== "interactive") {
+      setTimeout(addTestControls, 500);
+      return;
+    }
+
+    const controlPanel = document.createElement("div");
+    Object.assign(controlPanel.style, {
+      position: "fixed",
+      bottom: "20px",
+      right: "20px",
+      backgroundColor: "#f0f0f0",
+      border: "1px solid #ccc",
+      borderRadius: "5px",
+      padding: "10px",
+      zIndex: "9999",
+      boxShadow: "0 0 10px rgba(0,0,0,0.2)"
+    });
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Phishing Script Test Controls";
+    heading.style.margin = "0 0 10px 0";
+
+    const testBannerBtn = document.createElement("button");
+    testBannerBtn.textContent = "Test Warning Banner";
+    testBannerBtn.style.display = "block";
+    testBannerBtn.style.margin = "5px 0";
+    testBannerBtn.style.padding = "5px 10px";
+    testBannerBtn.addEventListener("click", () => {
+      showWarningBanner(window.location.hostname, "https://www.phishtank.com/");
+    });
+
+    const testFormBlockBtn = document.createElement("button");
+    testFormBlockBtn.textContent = "Test Form Blocking";
+    testFormBlockBtn.style.display = "block";
+    testFormBlockBtn.style.margin = "5px 0";
+    testFormBlockBtn.style.padding = "5px 10px";
+    testFormBlockBtn.addEventListener("click", blockFormSubmissions);
+
+    controlPanel.appendChild(heading);
+    controlPanel.appendChild(testBannerBtn);
+    controlPanel.appendChild(testFormBlockBtn);
+    document.body.appendChild(controlPanel);
   }
 
   function addConfigUI() {
@@ -132,14 +184,16 @@
   }
 
   function showWarningBanner(domain, detailUrl) {
-    if (
-      document.readyState !== "complete" &&
-      document.readyState !== "interactive"
-    ) {
-      document.addEventListener("DOMContentLoaded", () =>
-        showWarningBanner(domain, detailUrl)
-      );
+    // Wait for the document to be ready
+    if (document.readyState !== 'complete' && document.readyState !== 'interactive') {
+      document.addEventListener('DOMContentLoaded', () => showWarningBanner(domain, detailUrl));
       return;
+    }
+    
+    // Remove any existing banner
+    const existingBanner = document.getElementById("phishing-warning-banner");
+    if (existingBanner) {
+      existingBanner.remove();
     }
 
     const banner = document.createElement("div");
@@ -245,5 +299,10 @@
         el.style.opacity = "0.7";
       });
     });
+  }
+  // Expose functions for testing on localhost only
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    window.showWarningBanner = showWarningBanner;
+    window.blockFormSubmissions = blockFormSubmissions;
   }
 })();
