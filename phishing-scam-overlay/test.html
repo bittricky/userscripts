@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Overlay Test Page</title>
+    <meta name="description" content="Test page for the Phishing Scam Overlay userscript">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        form {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .test-button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        #testResults {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phishing Overlay Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Test Your Phishing Scam Overlay Userscript</h2>
+        <p>This page allows you to test your userscript without visiting actual phishing sites.</p>
+        <p><strong>Status:</strong> <span id="scriptStatus">Checking if userscript is active...</span></p>
+        
+        <div id="testControls" style="display: none;">
+            <button id="simulatePhishing" class="test-button">Simulate Phishing Detection</button>
+            <button id="testFormBlocking" class="test-button">Test Form Blocking</button>
+            <button id="resetPage" class="test-button">Reset Page</button>
+        </div>
+        
+        <div id="instructions">
+            <h3>Testing Instructions:</h3>
+            <ol>
+                <li>Make sure you have installed the Phishing Scam Overlay userscript</li>
+                <li>Ensure the userscript is enabled in Tampermonkey</li>
+                <li>The test controls should appear automatically if the script is properly installed</li>
+                <li>If controls don't appear, check the console for errors</li>
+            </ol>
+        </div>
+    </div>
+    
+    <form id="testForm">
+        <h3>Test Form</h3>
+        <p>This form will be blocked if the phishing detection is triggered.</p>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password">
+        </div>
+        <button type="submit">Submit Form</button>
+    </form>
+    
+    <div>
+        <h3>Test Results:</h3>
+        <div id="testResults">Results will appear here...</div>
+    </div>
+    
+    <script>
+        // Prevent actual form submission
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('testResults').innerHTML = 'Form submitted successfully (not blocked)';
+        });
+        
+        // Check if the userscript is active
+        setTimeout(function() {
+            const scriptStatus = document.getElementById('scriptStatus');
+            const testControls = document.getElementById('testControls');
+            
+            if (typeof window.showWarningBanner === 'function' && 
+                typeof window.blockFormSubmissions === 'function') {
+                scriptStatus.textContent = 'Userscript is active and ready for testing!';
+                scriptStatus.style.color = 'green';
+                testControls.style.display = 'block';
+            } else {
+                scriptStatus.textContent = 'Userscript not detected. Please check installation.';
+                scriptStatus.style.color = 'red';
+                document.getElementById('testResults').innerHTML = 
+                    '<strong>Userscript not detected</strong><br>' +
+                    'Please make sure you have:<br>' +
+                    '1. Installed the Phishing Scam Overlay userscript<br>' +
+                    '2. Enabled it in Tampermonkey<br>' +
+                    '3. Reloaded this page<br><br>' +
+                    'The userscript should automatically expose testing functions on localhost.';
+            }
+        }, 1000);
+        
+        // Simulate phishing detection
+        document.getElementById('simulatePhishing').addEventListener('click', function() {
+            // This will manually trigger the warning banner function
+            if (typeof window.showWarningBanner === 'function') {
+                window.showWarningBanner('test-phishing-site.com', 'https://www.phishtank.com/');
+                document.getElementById('testResults').innerHTML = 
+                    '<strong>Success!</strong> Manually triggered warning banner.<br>' +
+                    'You should see a black banner with red border at the top of the page.';
+            }
+        });
+        
+        // Test form blocking
+        document.getElementById('testFormBlocking').addEventListener('click', function() {
+            if (typeof window.blockFormSubmissions === 'function') {
+                window.blockFormSubmissions();
+                document.getElementById('testResults').innerHTML = 
+                    '<strong>Success!</strong> Manually triggered form blocking.<br>' +
+                    'The test form below should now be disabled with a red border and warning message.';
+            }
+        });
+        
+        // Reset page
+        document.getElementById('resetPage').addEventListener('click', function() {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
