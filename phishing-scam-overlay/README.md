@@ -128,4 +128,4 @@ The script uses vanilla JavaScript for all DOM operations:
 
 - [PhishTank](https://www.phishtank.com/) for providing the phishing site database
 - [Tampermonkey](https://www.tampermonkey.net/) for the userscript manager
-- [Claude](https://claude.ai/) for AI assistance with the userscript for testing
+- [Claude](https://claude.ai/) for AI assistance with the userscript testing
