@@ -20,12 +20,12 @@
 
   const hideFollowersCss = `
         /* Hide the entire div containing followers and following links */
-        .mb-3 a.Link--secondary.no-underline.no-wrap[href$="tab=followers"],
-        .mb-3 a.Link--secondary.no-underline.no-wrap[href$="tab=following"],
+        .tmp-mb-3 a.Link--secondary.no-underline.no-wrap[href$="tab=followers"],
+        .tmp-mb-3 a.Link--secondary.no-underline.no-wrap[href$="tab=following"],
         /* Hide the dot separator between followers and following */
-        .mb-3 a.Link--secondary.no-underline.no-wrap[href$="tab=followers"] + :not(a),
+        .tmp-mb-3 a.Link--secondary.no-underline.no-wrap[href$="tab=followers"] + :not(a),
         /* Hide the entire container if it only contains followers/following */
-        .mb-3:has(a.Link--secondary.no-underline.no-wrap[href$="tab=followers"]):not(:has(> :not(a.Link--secondary.no-underline.no-wrap[href$="tab=followers"], a.Link--secondary.no-underline.no-wrap[href$="tab=following"], :not(a)))) {
+        .tmp-mb-3:has(a.Link--secondary.no-underline.no-wrap[href$="tab=followers"]):not(:has(> :not(a.Link--secondary.no-underline.no-wrap[href$="tab=followers"], a.Link--secondary.no-underline.no-wrap[href$="tab=following"], :not(a)))) {
             display: none !important;
         }
     `;
