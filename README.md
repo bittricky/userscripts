@@ -1,6 +1,6 @@
 # Userscripts Collection
 
-> Feel like monkeying around with the browser?
+> Feel like [monkeying](https://youtu.be/acY2VSskD80?si=ph46r_7E6JWKJv6P) around with the browser?
 
 A collection of useful browser userscripts that enhance web browsing experience. These scripts are designed to work with popular userscript managers like Tampermonkey, Greasemonkey, and Violentmonkey.
 
@@ -47,14 +47,14 @@ A userscript runs on a webpage as if it were part of the page's code. When a pag
 ### Key Components and Flow:
 
 #### 1. Userscript Structure
-- **Metadata block**  
+- **Metadata block**
   Defines directives such as `@name`, `@match`, `@include`, `@grant`, `@run-at`, etc. These directives control when, where, and how the script runs.
-- **JavaScript code block**  
+- **JavaScript code block**
   Contains the actual logic that runs on matched pages, including functions, event listeners, and DOM manipulations.
 
 #### 2. Installation and Activation
-1. Install the userscript in a manager extension (e.g. Tampermonkey, Greasemonkey).  
-2. When you visit a page, the extension checks its URL against each script's `@match`/`@include` patterns.  
+1. Install the userscript in a manager extension (e.g. Tampermonkey, Greasemonkey).
+2. When you visit a page, the extension checks its URL against each script's `@match`/`@include` patterns.
 3. If there's a match, it injects the script into the page context, essentially merging your code with the page's JavaScript environment.
 4. The userscript manager handles permissions and isolation between scripts.
 
